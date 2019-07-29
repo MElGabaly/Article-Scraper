@@ -6,8 +6,8 @@ var Content = require("../models/content");
 router.get("/", function(req, res, next) {
   Content.find(function(err, content) {
     const hbsObject = {
-      title: "News Scraper",
-      mainpage: true,
+      title: "Saved",
+      mainpage: false,
       contents: content
     };
     res.render("index", hbsObject);
