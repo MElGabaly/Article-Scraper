@@ -38,7 +38,6 @@ exports.scrape = function(req, res) {
         db.Article.create(result)
           .then(function(dbArticle) {
             // View the added result in the console
-            console.log(dbArticle);
           })
           .catch(function(err) {
             // If an error occurred, log it
@@ -46,7 +45,16 @@ exports.scrape = function(req, res) {
           });
       });
       // Send a message to the client
-      res.send("Scrape Complete");
+      db.Article.find({})
+        .then(function(dbArticle) {
+          // If we were able to successfully find Articles, send them back to the client
+          console.log(dbArticle);
+          res.json(dbArticle);
+        })
+        .catch(function(err) {
+          // If an error occurred, send it to the client
+          res.json(err);
+        });
     });
 };
 
