@@ -26,15 +26,34 @@ exports.scrape = function(req, res) {
           .children("a")
           .text();
 
-        // Create a new Article using the `result` object built from scraping
-        db.Article.create(result)
-          .then(function(dbArticle) {
-            // View the added result in the console
-          })
-          .catch(function(err) {
-            // If an error occurred, log it
-            console.log(err);
+        if (result.title !== "" && result.summary !== "") {
+          db.Article.findOne({ title: result.title }, function(err, data) {
+            if (err) {
+              console.log(err);
+            } else {
+              if (data === null) {
+                db.Article.create(result)
+                  .then(function(dbArticle) {
+                    console.log(dbArticle);
+                  })
+                  .catch(function(err) {
+                    // If an error occurred, send it to the client
+                    console.log(err);
+                  });
+              }
+              console.log(data);
+            }
           });
+        }
+        // Create a new Article using the `result` object built from scraping
+        // db.Article.create(result)
+        //   .then(function(dbArticle) {
+        //     // View the added result in the console
+        //   })
+        //   .catch(function(err) {
+        //     // If an error occurred, log it
+        //     console.log(err);
+        //   });
       });
       // Send a message to the client
       db.Article.find({})
