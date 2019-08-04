@@ -33,7 +33,6 @@ $(document).ready(function() {
   function handleArticleScrape() {
     // This function handles the user clicking any "scrape new article" buttons
     $.get("/api/scrape").then(function(data) {
-      console.log(data);
       window.location.href = "/";
     });
   }
