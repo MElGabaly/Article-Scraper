@@ -9,7 +9,9 @@ var mongoose = require("mongoose");
 
 var app = express();
 
-mongoose.connect("mongodb://localhost:27017/nodeapp");
+var MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/nodeapp";
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // view engine setup
 app.engine(".hbs", expressHbs({ defaultLayout: "layout", extname: ".hbs" }));
